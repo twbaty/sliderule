@@ -140,11 +140,38 @@
       </div>
 
       <p class="note">
-        <strong>Why not addition and subtraction?</strong> C and D are logarithmic scales &mdash; lining them up adds or
-        subtracts the <em>logarithms</em> of two numbers, which multiplies or divides the numbers themselves. There is
-        no way to get 3 + 4 out of a log scale the way you get 3 &times; 4. Slide rules exist to speed up multiplication,
-        division, roots, powers, and trig; addition and subtraction were always just done by hand.
+        <strong>Why not addition and subtraction, directly?</strong> C and D are logarithmic scales &mdash; lining them up
+        adds or subtracts the <em>logarithms</em> of two numbers, which multiplies or divides the numbers themselves.
+        There is no tick mark you can just line up and read x + y off, the way you read x &times; y. Slide rules exist
+        to speed up multiplication, division, roots, powers, and trig; addition and subtraction were normally just
+        done by hand. That said &mdash; there's a disguised-multiplication trick that gets you there anyway. See below.
       </p>
+
+      <div class="example">
+        <h3>Party trick: adding with C and D &mdash; 2.3 + 4.5 = 6.8</h3>
+        <p>
+          To add x and y, find a multiplier m such that x &times; m = x + y, which works out to m = y&frasl;x + 1.
+          The slide rule can't read x + y directly, but it's very good at reading a multiplication &mdash; so you look
+          up the ratio, add 1 in your head, and let the rule do the rest.
+        </p>
+        <div class="example-steps">
+          <figure>
+            <img src="add_step1.svg" alt="C's 1 on D's 2.3; cursor moved to D's 4.5 reads 1.957 on C">
+            <figcaption><strong>Step 1.</strong> Slide C's 1 to 2.3 on D. Move the cursor to 4.5 on D and read the ratio underneath on C &mdash; 1.957.</figcaption>
+          </figure>
+          <figure>
+            <img src="add_step2.svg" alt="Cursor moved to 2.957 on C (1.957 plus 1), reading 6.8 on D">
+            <figcaption><strong>Step 2.</strong> Add 1 to that ratio in your head &mdash; 2.957 &mdash; and move the cursor there on C. Read the answer, 6.8, on D underneath.</figcaption>
+          </figure>
+        </div>
+        <p class="credit" style="margin-top: 14px;">
+          Trick via Derek Ross's
+          <a href="http://www.antiquark.com/2005/01/slide-rule-tricks.html">Slide Rule Tricks</a> (2005) &mdash; the
+          same author behind the N909-ES simulation this page is built on. His post also describes an addition trick
+          using the L scale, but that one only works on rules where L is printed on the slide. On this particular
+          N909-ES, L is printed on the fixed bottom stator, so that version doesn't apply here.
+        </p>
+      </div>
     </section>
 
     <div class="footer">
