@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn the Slide Rule</title>
+  <link rel="stylesheet" href="rule.css">
+  <style>
+    :root {
+      --paper: #f6f0e3;
+      --paper-2: #efe4cf;
+      --ink: #183149;
+      --muted: #5a6677;
+      --accent: #c46b2f;
+      --accent-2: #256b74;
+      --line: rgba(24, 49, 73, 0.14);
+      --shadow: 0 24px 60px rgba(24, 49, 73, 0.14);
+      --radius: 24px;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background:
+        radial-gradient(circle at top left, rgba(197, 107, 47, 0.15), transparent 30%),
+        radial-gradient(circle at top right, rgba(37, 107, 116, 0.12), transparent 28%),
+        linear-gradient(180deg, #fffaf0 0%, #f3ebdc 100%);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(24, 49, 73, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24, 49, 73, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.3), transparent 92%);
+      opacity: 0.55;
+    }
+
+    .page {
+      width: min(1900px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .content-col {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    /* On the hub page the rule reads as one flowing page, not a lesson tool you
+       need pinned in view, so it scrolls away like everything else. */
+    .rule-section {
+      position: static;
+      background: none;
+      backdrop-filter: none;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .panel-head {
+      justify-content: flex-end;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 24px;
+      animation: rise 700ms ease both;
+    }
+
+    .hero-copy,
+    .card {
+      background: rgba(255, 250, 241, 0.88);
+      border: 1px solid rgba(24, 49, 73, 0.1);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-copy {
+      border-radius: calc(var(--radius) + 8px);
+      padding: 30px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(37, 107, 116, 0.12);
+      color: var(--accent-2);
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      margin-top: 16px;
+      max-width: 10ch;
+    }
+
+    .lede {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 65ch;
+      margin: 18px 0 0;
+    }
+
+    .hero-aside {
+      display: grid;
+      gap: 16px;
+    }
+
+    .stat {
+      border-radius: var(--radius);
+      padding: 20px;
+      background:
+        linear-gradient(160deg, rgba(37, 107, 116, 0.15), rgba(196, 107, 47, 0.08)),
+        rgba(255, 250, 241, 0.88);
+      border: 1px solid rgba(24, 49, 73, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .stat p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .card h2 {
+      font-size: 1.55rem;
+      margin-bottom: 10px;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .card ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+    }
+
+    .card li + li {
+      margin-top: 8px;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .mini {
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255, 250, 241, 0.9);
+      border: 1px solid rgba(24, 49, 73, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .mini h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .practice {
+      margin-top: 24px;
+      border-radius: calc(var(--radius) + 6px);
+      padding: 24px;
+      background:
+        linear-gradient(160deg, rgba(37, 107, 116, 0.14), rgba(196, 107, 47, 0.06)),
+        rgba(255, 250, 241, 0.92);
+      border: 1px solid rgba(24, 49, 73, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .scale-map {
+      margin-top: 24px;
+      border-radius: calc(var(--radius) + 6px);
+      padding: 24px;
+      background: rgba(255, 250, 241, 0.9);
+      border: 1px solid rgba(24, 49, 73, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .scale-map h2 {
+      margin-bottom: 14px;
+    }
+
+    .scale-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .scale-card {
+      border-radius: 18px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(37, 107, 116, 0.1), rgba(196, 107, 47, 0.06));
+      border: 1px solid rgba(24, 49, 73, 0.08);
+    }
+
+    .scale-card-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    .scale-card-link:hover,
+    .scale-card-link:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(24, 49, 73, 0.12);
+      border-color: rgba(37, 107, 116, 0.28);
+      outline: none;
+    }
+
+    .scale-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .scale-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .practice ol {
+      margin: 12px 0 0;
+      padding-left: 22px;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 18px 2px 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .credit {
+      margin-top: 20px;
+      padding: 0 2px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .credit a {
+      color: var(--accent-2);
+    }
+
+    .resources {
+      margin-top: 24px;
+      border-radius: calc(var(--radius) + 6px);
+      padding: 24px;
+      background: rgba(37, 107, 116, 0.06);
+      border: 1px solid rgba(37, 107, 116, 0.16);
+    }
+
+    .resources h2 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .resources ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .resources li + li {
+      margin-top: 6px;
+    }
+
+    .resources a {
+      color: var(--accent-2);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .resources a:hover,
+    .resources a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .resources p {
+      margin: 0 0 10px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 14px;
+      }
+
+      .hero-copy,
+      .card,
+      .panel,
+      .practice {
+        padding: 18px;
+      }
+
+      .scale-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="rule-section">
+      <div class="rule-section-inner">
+        <section class="panel">
+          <div class="panel-head">
+            <button class="action" id="centerBtn" type="button">Center slide &amp; cursor</button>
+          </div>
+
+          <div class="rule" id="rule">
+            <div class="rule-stage" id="ruleStage" aria-label="Slide rule front, draggable">
+              <img class="rule-piece rule-top" src="extracted_assets/n909-es-stator-front-top.jpg" alt="Top section of the slide rule">
+              <div class="rule-slider-wrap" id="slideWrap">
+                <img class="rule-piece rule-slider" src="extracted_assets/n909-es-slider-front.jpg" alt="Movable slider section of the rule">
+              </div>
+              <img class="rule-piece rule-bottom" src="extracted_assets/n909-es-stator-front-bottom.jpg" alt="Bottom section of the slide rule">
+              <img class="rule-piece rule-leftbit" src="extracted_assets/n909-es-end-front-left-bit.gif" alt="">
+              <img class="rule-piece rule-rightbit" src="extracted_assets/n909-es-end-front-right-bit.gif" alt="">
+              <img class="rule-piece" id="cursor" src="extracted_assets/n909-es-cursor.gif" alt="Cursor window">
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </section>
+
+    <div class="content-col">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">From the archived Pickett simulation</div>
+        <h1>Learn the slide rule.</h1>
+        <p class="lede">
+          This page rebuilds the old browser-captured slide-rule archive as a real, hands-on rule.
+          Drag the slide and the cursor, read the printed scales yourself, and see why logarithms make multiplication work.
+        </p>
+      </div>
+      <div class="hero-aside">
+        <div class="stat">
+          <strong>Big idea</strong>
+          <p>The slide rule replaces multiplication with addition of distances on a logarithmic scale.</p>
+        </div>
+        <div class="stat">
+          <strong>What you will learn</strong>
+          <p>How to align the scales, read a product off the printed numbers, and keep track of the decimal point like a pro.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <article class="card">
+        <h2>How to think about it</h2>
+        <p>
+          A slide rule uses two matching log scales. When you move one scale so that a number lines up with 1 on the other scale,
+          every other number on the moving scale now represents a factor. That is why the tool can do multiplication and division so fast.
+        </p>
+        <ul>
+          <li><strong>Fix one number.</strong> Align it with the 1 on the other scale.</li>
+          <li><strong>Read the other factor.</strong> The answer is under the second number.</li>
+          <li><strong>Track the decimal.</strong> The rule gives you the digits; you supply the place value.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>The original archive</h2>
+        <p>
+          The file in this folder is a Windows Internet Explorer capture of the classic virtual Pickett N909-ES slide rule
+          by Derek Ross. This page keeps the same real artwork and the same click-and-drag interaction, just rebuilt without
+          the old DHTML library so it still works in a modern browser.
+        </p>
+        <p>
+          If you are brand new to slide rules, start dragging the demo above, then come back here to read the short scale guide below.
+        </p>
+      </article>
+
+      <div class="lesson-grid">
+        <article class="mini">
+          <h3>1. The D scale</h3>
+          <p>
+            The D scale is the main working scale, printed on the fixed top and bottom bars. It never moves &mdash; only the slide and the cursor do.
+          </p>
+        </article>
+        <article class="mini">
+          <h3>2. The C scale</h3>
+          <p>
+            The C scale is printed on the slide. You line up its 1 with a number on D, then read the result under a second number.
+          </p>
+        </article>
+        <article class="mini">
+          <h3>3. The cursor</h3>
+          <p>
+            The cursor is the transparent hairline window that helps you see where the answer lands as the scales move.
+            It is the third reference point, not a third numbered scale.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="practice">
+      <h2>Practice moves</h2>
+      <ol>
+        <li>Multiply: line up 1 on C with one factor on D, then find the second factor on C and read the product on D under it.</li>
+        <li>Divide: reverse the idea and use the scales to compare a known product with a divisor.</li>
+        <li>Estimate first: the slide rule is fast because it is excellent at approximation, then you refine the decimal place mentally.</li>
+      </ol>
+      <p class="footer">
+        Tip: if the answer extends past the visible decade, a real slide rule simply carries the decimal place into the next decade.
+      </p>
+    </section>
+
+    <section class="scale-map">
+      <h2>Common scales to learn</h2>
+      <div class="scale-cards">
+        <a class="scale-card scale-card-link" href="cd.html">
+          <strong>C and D</strong>
+          <p>The workhorse pair for multiplication and division. These are the first scales to master.</p>
+        </a>
+        <a class="scale-card scale-card-link" href="ab.html">
+          <strong>A and B</strong>
+          <p>Two-decade versions of C and D, useful for squares and square roots.</p>
+        </a>
+        <a class="scale-card scale-card-link" href="k.html">
+          <strong>K</strong>
+          <p>The cube scale. It handles cubes and cube roots on many classic rules.</p>
+        </a>
+        <a class="scale-card scale-card-link" href="ci-di.html">
+          <strong>CI and DI</strong>
+          <p>Inverse scales. Handy when the number you need to line up is inconvenient on the normal scale.</p>
+        </a>
+        <a class="scale-card scale-card-link" href="l.html">
+          <strong>L</strong>
+          <p>A logarithm scale used for direct log readings on some rules and examples.</p>
+        </a>
+        <a class="scale-card scale-card-link" href="s-t.html">
+          <strong>S and T</strong>
+          <p>Trig scales for sine, tangent, and related angle work on rules with trig features.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="resources">
+      <h2>Further resources</h2>
+      <p>Once the basics click, these two are worth a look:</p>
+      <ul>
+        <li><a href="https://sliderulemuseum.com/SR_Course.shtml">The International Slide Rule Museum's free course</a> &mdash; a full table of contents covering every scale in more depth, with worked examples. Each lesson page here links to the relevant section.</li>
+        <li><a href="https://www.youtube.com/watch?v=oYQdKbQ-sgM">How to Use a Slide Rule (1957 instructional film)</a> &mdash; a vintage explanation of the same fundamentals, on video.</li>
+      </ul>
+    </section>
+
+    <p class="credit">
+      The Pickett N909-ES artwork, photography, and original browser simulation are the work of Derek Ross,
+      &copy; 2005 (<a href="http://www.antiquark.com/2005/02/final-damn-rule.html">antiquark.com</a>). This page is an
+      unofficial teaching rebuild of that simulation.
+    </p>
+    </div>
+  </main>
+
+  <script src="rule.js"></script>
+</body>
+</html>

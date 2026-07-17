@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Virtual Pickett N909-ES SIMPLEX TRIG RULE with METRIC CONVERSION Slide Rule</TITLE>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type><!--
+CODE AND IMAGES COPYRIGHT (c) 2005, DEREK ROSS
+-->
+<SCRIPT type=text/javascript>
+<!--
+
+var showing_front=1;
+
+function showRuleBack()
+{        
+  document.images.statortop.src ='n909-es-stator-back-top.jpg';   
+  
+  document.images.statorbottom.src ='n909-es-stator-back-bottom.jpg';     
+  
+  dd.elements.slider.swapImage('n909-es-slider-back.jpg');     
+}
+
+function showRuleFront()
+{        
+  document.images.statortop.src ='n909-es-stator-front-top.jpg'; 
+  
+  document.images.statorbottom.src ='n909-es-stator-front-bottom.jpg';   
+  
+  dd.elements.slider.swapImage('n909-es-slider-front.jpg');     
+}
+
+function flipSlideRule()
+{
+ if(showing_front)
+ {
+    showRuleBack();
+   showing_front = 0;
+ }
+ else
+ {
+    showRuleFront();
+   showing_front = 1;
+ }
+}
+
+-->
+</SCRIPT>
+
+<META name=GENERATOR content="MSHTML 9.00.8112.16434"></HEAD>
+<BODY bgColor=#60b0d0><B><BIG>Simulated Pickett N909-ES Slide Rule</BIG></B> <!--
+A simulation of a Pickett slide rule implemented entirely in JavaScript and DHTML.<br>
+<b>Instructions</b>: Just click and drag anywhere on the rule. If it's not working properly, click <b>"Reload"</b> on your browser 
+to reinitialize things. I think the problem is that some initialization functions are called before the images are done loading.<br>
+This page made possible by the miraculous 
+<a href="http://www.walterzorn.com/dragdrop/dragdrop_e.htm"> Drag & Drop for Images and Layers</a> 
+library by Walter Zorn.<br> (Note: I commented out line 1197 of wz_dragdrop.js, 
+"<tt>dd.obj.maximizeZ();</tt>" for aesthetic reasons.)<p>
+--><SMALL><A 
+href="http://www.antiquark.com/sliderule/sim/n909es/n909-es-instructions.jpg">[Instruction 
+Sheet (jpg)]</A></SMALL> <SMALL><A 
+href="http://www.antiquark.com/2005/02/final-damn-rule.html">[Explanation]</A></SMALL> 
+<SMALL><A href="http://www.antiquark.com/sliderule/sim/index.html">[Gallery 
+Index]</A></SMALL> <SMALL><A href="http://www.antiquark.com/">[back to 
+AntiQuark]</A><SMALL> [Copyright © 2005 Derek Ross]</SMALL></SMALL> 
+<HR>
+
+<SCRIPT type=text/javascript 
+src="http://www.antiquark.com/sliderule/sim/n909es/wz_dragdrop.js"></SCRIPT>
+
+<TABLE width="100%">
+  <TBODY>
+  <TR>
+    <TD align=right><BUTTON onclick=flipSlideRule() align="right">Flip to 
+      Other Side of Slide Rule</BUTTON></TD></TR></TBODY></TABLE>
+<DIV 
+style="POSITION: relative; WIDTH: 1868px; HEIGHT: 290px; TOP: 10px; LEFT: 20px" 
+id=layer1><IMG style="POSITION: absolute; TOP: 36px; LEFT: 0px" id=statortop 
+src="http://www.antiquark.com/sliderule/sim/n909es/n909-es-stator-front-top.jpg" 
+width=1828 height=50> <IMG style="POSITION: absolute; TOP: 86px; LEFT: 0px" 
+name=slider 
+src="http://www.antiquark.com/sliderule/sim/n909es/n909-es-slider-front.jpg" 
+width=1828 height=83> <IMG style="POSITION: absolute; TOP: 169px; LEFT: 0px" 
+id=statorbottom 
+src="http://www.antiquark.com/sliderule/sim/n909es/n909-es-stator-front-bottom.jpg" 
+width=1828 height=50> <IMG style="POSITION: absolute; TOP: 85px; LEFT: -1px" 
+name=leftendbit 
+src="http://www.antiquark.com/sliderule/sim/n909es/n909-es-end-front-left-bit.gif" 
+width=78 height=85> <IMG style="POSITION: absolute; TOP: 85px; LEFT: 1751px" 
+name=rightendbit 
+src="http://www.antiquark.com/sliderule/sim/n909es/n909-es-end-front-right-bit.gif" 
+width=77 height=85> <IMG style="POSITION: absolute; TOP: 0px; LEFT: 200px" 
+name=cursor 
+src="http://www.antiquark.com/sliderule/sim/n909es/n909-es-cursor.gif" width=189 
+height=254> </DIV>
+<SCRIPT type=text/javascript>
+<!--
+SET_DHTML( SCROLL, "cursor"+HORIZONTAL,"rightendbit"+HORIZONTAL+VERTICAL,"leftendbit"+HORIZONTAL+VERTICAL, "layer1"+HORIZONTAL, "slider"+HORIZONTAL);
+-->
+</SCRIPT>
+</BODY></HTML>

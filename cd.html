@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C and D Scales</title>
+  <link rel="stylesheet" href="topic.css">
+  <link rel="stylesheet" href="rule.css">
+</head>
+<body>
+  <main class="page">
+    <section class="rule-section">
+      <div class="rule-section-inner">
+        <section class="panel">
+          <div class="panel-head">
+            <a class="hub-link" href="index.html">&larr; Back to hub</a>
+            <button class="action" id="centerBtn" type="button">Center slide &amp; cursor</button>
+          </div>
+
+          <div class="rule" id="rule">
+            <div class="rule-stage" id="ruleStage" aria-label="Slide rule front, draggable">
+              <img class="rule-piece rule-top" src="extracted_assets/n909-es-stator-front-top.jpg" alt="Top section of the slide rule">
+              <div class="rule-slider-wrap" id="slideWrap">
+                <img class="rule-piece rule-slider" src="extracted_assets/n909-es-slider-front.jpg" alt="Movable slider section of the rule">
+              </div>
+              <img class="rule-piece rule-bottom" src="extracted_assets/n909-es-stator-front-bottom.jpg" alt="Bottom section of the slide rule">
+              <img class="rule-piece rule-leftbit" src="extracted_assets/n909-es-end-front-left-bit.gif" alt="">
+              <img class="rule-piece rule-rightbit" src="extracted_assets/n909-es-end-front-right-bit.gif" alt="">
+              <img class="rule-piece" id="cursor" src="extracted_assets/n909-es-cursor.gif" alt="Cursor window">
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </section>
+
+    <div class="content-col">
+    <section class="hero">
+      <div class="eyebrow">Slide Rule Topic 1</div>
+      <h1>Learn the C and D scales.</h1>
+      <p class="lede">
+        These are the core working scales on most slide rules. If you can use C and D well, you can multiply, divide,
+        and read most of the rest of the rule with confidence.
+      </p>
+    </section>
+
+    <nav class="nav" aria-label="Topic navigation">
+      <a href="index.html">Hub</a>
+      <a href="cd.html">C and D</a>
+      <a href="ab.html">A and B</a>
+      <a href="k.html">K</a>
+      <a href="ci-di.html">CI and DI</a>
+      <a href="l.html">L</a>
+      <a href="s-t.html">S and T</a>
+    </nav>
+
+    <section class="grid">
+      <div class="stack">
+        <article class="card">
+          <div class="badge">Core idea</div>
+          <h2>One scale moves, one scale reads.</h2>
+          <p>
+            The C scale is the moving scale. The D scale is the fixed working scale. To multiply, line up 1 on C with
+            the first factor on D, then read the second factor on C under the product on D.
+          </p>
+          <ul>
+            <li>Use the same idea for division, but reverse the reasoning.</li>
+            <li>Keep the decimal place in your head; the rule shows the digits, not the decimal point.</li>
+            <li>Move slowly at first and say the factors out loud.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="badge">Practice</div>
+          <h2>Try this sequence</h2>
+          <div class="step"><strong>1.</strong> Place 1 on C over 2 on D.</div>
+          <div class="step"><strong>2.</strong> Find 3 on C.</div>
+          <div class="step"><strong>3.</strong> Read the answer on D. It should land at 6.</div>
+          <p>
+            Once that feels natural, try 4 x 1.5 and 6 x 1.4. If you can do those quickly, you are ready for the
+            two-decade scales.
+          </p>
+        </article>
+      </div>
+
+      <aside class="stack">
+        <article class="card">
+          <div class="badge">Why it works</div>
+          <h2>Logarithms turn multiplication into addition.</h2>
+          <p>
+            Slide rules hide the hard part. The spacing is logarithmic, so equal distances correspond to equal
+            multiplication factors. That is the whole trick.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="badge">Next step</div>
+          <h2>Ready to move on?</h2>
+          <p>
+            When C and D feel comfortable, go straight to the two-decade scales. They teach squares and square roots
+            using the same logic.
+          </p>
+          <div class="next">
+            <a class="button" href="ab.html">Next: A and B</a>
+            <a class="button secondary" href="index.html">Back to hub</a>
+          </div>
+        </article>
+      </aside>
+    </section>
+
+    <section class="examples">
+      <h2>Worked examples</h2>
+
+      <div class="example">
+        <h3>Multiply: 2 &times; 3 = 6</h3>
+        <div class="example-steps">
+          <figure>
+            <img src="mult_step1.svg" alt="D scale fixed at 1-10; C scale shifted so its 1 sits over 2 on D">
+            <figcaption><strong>Step 1.</strong> Slide C until its 1 lines up with 2 on D.</figcaption>
+          </figure>
+          <figure>
+            <img src="mult_step2.svg" alt="Cursor moved to 3 on C, lining up with 6 on D">
+            <figcaption><strong>Step 2.</strong> Move the cursor to 3 on C. Read the answer &mdash; 6 &mdash; on D underneath it.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="example">
+        <h3>Divide: 6 &divide; 3 = 2</h3>
+        <div class="example-steps">
+          <figure>
+            <img src="div_step1.svg" alt="Cursor placed on 6 on D; C scale shifted so its 3 sits under the cursor">
+            <figcaption><strong>Step 1.</strong> Put the cursor on 6 (the D scale). Slide C until its 3 sits under the cursor.</figcaption>
+          </figure>
+          <figure>
+            <img src="div_step2.svg" alt="Reading D underneath C's 1, landing on 2">
+            <figcaption><strong>Step 2.</strong> Read D underneath C's 1. That is the answer &mdash; 2.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <p class="note">
+        <strong>Why not addition and subtraction?</strong> C and D are logarithmic scales &mdash; lining them up adds or
+        subtracts the <em>logarithms</em> of two numbers, which multiplies or divides the numbers themselves. There is
+        no way to get 3 + 4 out of a log scale the way you get 3 &times; 4. Slide rules exist to speed up multiplication,
+        division, roots, powers, and trig; addition and subtraction were always just done by hand.
+      </p>
+    </section>
+
+    <div class="footer">
+      Tip: if the answer seems too big or too small, you probably need to shift the decimal place by a power of 10.
+    </div>
+
+    <section class="resources">
+      <h2>Go deeper</h2>
+      <p>The International Slide Rule Museum's free course covers this in more detail, with its own diagrams and worked examples.</p>
+      <ul>
+        <li><a href="https://sliderulemuseum.com/SR_Course.shtml#1">Simple Multiplication</a> &mdash; the C/D technique from the lesson above, step by step.</li>
+        <li><a href="https://sliderulemuseum.com/SR_Course.shtml#5">Simple Division</a> &mdash; the same idea in reverse.</li>
+      </ul>
+    </section>
+
+    <p class="credit">
+      The Pickett N909-ES artwork, photography, and original browser simulation are the work of Derek Ross,
+      &copy; 2005 (<a href="http://www.antiquark.com/2005/02/final-damn-rule.html">antiquark.com</a>). This page is an
+      unofficial teaching rebuild of that simulation.
+    </p>
+  </div>
+  </main>
+
+  <script src="rule.js"></script>
+</body>
+</html>

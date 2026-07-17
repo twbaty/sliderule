@@ -1,0 +1,214 @@
+/* Shared interactive-rule widget: styles used on every page. Sticks to the
+   top of the viewport on scroll so it stays usable while reading a lesson. */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rule-section {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  margin-bottom: 24px;
+  padding: 16px 0 20px;
+  background: rgba(239, 228, 207, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 30px -18px rgba(24, 49, 73, 0.35);
+  animation: rise 700ms ease both;
+}
+
+.rule-section-inner {
+  max-width: 1900px;
+  width: min(1900px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.panel {
+  border-radius: calc(24px + 4px);
+  padding: 22px;
+  background:
+    linear-gradient(180deg, rgba(24, 49, 73, 0.98), rgba(27, 41, 56, 0.98));
+  color: #f7f2e8;
+  box-shadow: 0 24px 60px rgba(24, 49, 73, 0.14);
+}
+
+.panel h2,
+.panel h3,
+.panel p,
+.panel label,
+.panel small {
+  color: inherit;
+}
+
+.panel h2 {
+  font-size: 1.65rem;
+  margin-bottom: 6px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.panel-instructions {
+  margin: 0;
+  max-width: 62ch;
+  color: rgba(247, 242, 232, 0.82);
+}
+
+.hub-link {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: rgba(247, 242, 232, 0.75);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hub-link:hover,
+.hub-link:focus-visible {
+  color: #f7f2e8;
+  text-decoration: underline;
+}
+
+.action {
+  border: 1px solid rgba(247, 242, 232, 0.16);
+  border-radius: 14px;
+  padding: 12px 18px;
+  font: inherit;
+  color: #f7f2e8;
+  background: rgba(255, 255, 255, 0.09);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.action:hover {
+  filter: brightness(1.06);
+}
+
+.rule {
+  position: relative;
+  border-radius: 20px;
+  padding: 18px 18px 24px;
+  background: linear-gradient(180deg, #f1e5cc, #e4d2aa);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+.rule::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 50%, rgba(255,255,255,0.35), transparent 18%),
+    radial-gradient(circle at 87% 50%, rgba(255,255,255,0.28), transparent 20%);
+  pointer-events: none;
+}
+
+.rule-stage {
+  position: relative;
+  width: min(100%, 1868px);
+  aspect-ratio: 1868 / 290;
+  margin: 0 auto;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.rule-stage.dragging {
+  cursor: grabbing;
+}
+
+.rule-piece {
+  position: absolute;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.rule-top {
+  top: 12.4%;
+  left: 0;
+  width: 97.87%;
+}
+
+.rule-slider-wrap {
+  position: absolute;
+  top: 29.7%;
+  left: 0;
+  width: 97.87%;
+  height: auto;
+  transform: translateX(0px);
+  z-index: 2;
+  will-change: transform;
+}
+
+.rule-slider {
+  width: 100%;
+  height: auto;
+}
+
+.rule-bottom {
+  top: 58.3%;
+  left: 0;
+  width: 97.87%;
+}
+
+.rule-leftbit {
+  top: 29.3%;
+  left: -0.1%;
+  width: 4.18%;
+  z-index: 3;
+}
+
+.rule-rightbit {
+  top: 29.3%;
+  right: 0;
+  width: 4.12%;
+  z-index: 3;
+}
+
+#cursor {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10.1%;
+  height: auto;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  z-index: 4;
+  cursor: grab;
+  background: none;
+  box-shadow: none;
+}
+
+#cursor.dragging {
+  cursor: grabbing;
+}
+
+.rule-hint {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: rgba(247, 242, 232, 0.7);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .rule-section {
+    position: static;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rule-section {
+    animation-duration: 0.01ms !important;
+  }
+}

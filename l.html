@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L Scale</title>
+  <link rel="stylesheet" href="topic.css">
+  <link rel="stylesheet" href="rule.css">
+</head>
+<body>
+  <main class="page">
+    <section class="rule-section">
+      <div class="rule-section-inner">
+        <section class="panel">
+          <div class="panel-head">
+            <a class="hub-link" href="index.html">&larr; Back to hub</a>
+            <button class="action" id="centerBtn" type="button">Center slide &amp; cursor</button>
+          </div>
+
+          <div class="rule" id="rule">
+            <div class="rule-stage" id="ruleStage" aria-label="Slide rule front, draggable">
+              <img class="rule-piece rule-top" src="extracted_assets/n909-es-stator-front-top.jpg" alt="Top section of the slide rule">
+              <div class="rule-slider-wrap" id="slideWrap">
+                <img class="rule-piece rule-slider" src="extracted_assets/n909-es-slider-front.jpg" alt="Movable slider section of the rule">
+              </div>
+              <img class="rule-piece rule-bottom" src="extracted_assets/n909-es-stator-front-bottom.jpg" alt="Bottom section of the slide rule">
+              <img class="rule-piece rule-leftbit" src="extracted_assets/n909-es-end-front-left-bit.gif" alt="">
+              <img class="rule-piece rule-rightbit" src="extracted_assets/n909-es-end-front-right-bit.gif" alt="">
+              <img class="rule-piece" id="cursor" src="extracted_assets/n909-es-cursor.gif" alt="Cursor window">
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </section>
+
+    <div class="content-col">
+    <section class="hero">
+      <div class="eyebrow">Slide Rule Topic 5</div>
+      <h1>Learn the L scale.</h1>
+      <p class="lede">
+        The L scale is a logarithm scale. It is not as common on every rule, but it is a useful bridge between the
+        slide rule's physical movement and the math it represents.
+      </p>
+    </section>
+
+    <nav class="nav" aria-label="Topic navigation">
+      <a href="index.html">Hub</a>
+      <a href="cd.html">C and D</a>
+      <a href="ab.html">A and B</a>
+      <a href="k.html">K</a>
+      <a href="ci-di.html">CI and DI</a>
+      <a href="l.html">L</a>
+      <a href="s-t.html">S and T</a>
+    </nav>
+
+    <section class="grid">
+      <div class="stack">
+        <article class="card">
+          <div class="badge">Core idea</div>
+          <h2>Read the logarithm directly.</h2>
+          <p>
+            The L scale can show logarithmic values more directly than the ordinary multiplication scales. That makes
+            it useful in a teaching context for showing why the slide rule works at all.
+          </p>
+          <ul>
+            <li>Best seen as a math bridge, not just a calculator shortcut.</li>
+            <li>It helps connect physical distance to logarithmic value.</li>
+            <li>Very useful for understanding the broader logic of the rule.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="badge">Practice</div>
+          <h2>Think in powers</h2>
+          <div class="step"><strong>1.</strong> Ask what value the spacing would represent in log terms.</div>
+          <div class="step"><strong>2.</strong> Compare it with the ordinary C and D spacing.</div>
+          <div class="step"><strong>3.</strong> Notice how a direct log reading makes the curve of the rule easier to trust.</div>
+          <p>
+            This is the kind of scale that rewards curiosity. It is less about speed and more about insight.
+          </p>
+        </article>
+      </div>
+
+      <aside class="stack">
+        <article class="card">
+          <div class="badge">Why it matters</div>
+          <h2>Seeing the math behind the tool.</h2>
+          <p>
+            Many learners first meet logs through the slide rule, not the other way around. L scales are a good reminder
+            that the instrument is really a logarithm machine.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="badge">Next step</div>
+          <h2>Ready for trig?</h2>
+          <p>
+            S and T are the classic trig scales. They bring angles onto the same physical language as the other scales.
+          </p>
+          <div class="next">
+            <a class="button" href="s-t.html">Next: S and T</a>
+            <a class="button secondary" href="ci-di.html">Back: CI and DI</a>
+          </div>
+        </article>
+      </aside>
+    </section>
+
+    <div class="footer">
+      Tip: the log scale is less about everyday multiplication and more about understanding the slide rule as a log table you can hold.
+    </div>
+
+    <section class="resources">
+      <h2>Go deeper</h2>
+      <p>The International Slide Rule Museum doesn't run a full course lesson on the plain L scale specifically, but two things there are worth a look:</p>
+      <ul>
+        <li><a href="https://sliderulemuseum.com/SR_Terms.shtml#L">L scale glossary entry</a> &mdash; a precise definition, in their slide rule encyclopedia (search the page for "L scale").</li>
+        <li><a href="https://sliderulemuseum.com/SR_Course.shtml#18">Log-Log (LL) scales</a> &mdash; the next level up from L, used for arbitrary powers and roots.</li>
+      </ul>
+    </section>
+
+    <p class="credit">
+      The Pickett N909-ES artwork, photography, and original browser simulation are the work of Derek Ross,
+      &copy; 2005 (<a href="http://www.antiquark.com/2005/02/final-damn-rule.html">antiquark.com</a>). This page is an
+      unofficial teaching rebuild of that simulation.
+    </p>
+  </div>
+  </main>
+
+  <script src="rule.js"></script>
+</body>
+</html>
