@@ -10,3 +10,4 @@ A public teaching site for the Pickett N909-ES slide rule, deployed on Netlify f
 - Math must be exact: scale positions come from formulas, and tests prove it. Don't eyeball.
 - Keep Derek Ross's credit lines while his artwork is used.
 - Small, finished steps beat one big rewrite. If a job is too big, finish a working part and say what's left.
+- **Netlify credits:** every deploy of `main` costs credits. Bundle your work into one pull request per job; never push to `main` directly.
