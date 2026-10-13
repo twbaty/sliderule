@@ -25,10 +25,6 @@ standard scale formulas, but their precise printed placement and conversion
 labels cannot be read from the supplied low-resolution photos; those details
 are not claimed as verified.
 
-The archived virtual-page source names back-side stator and slider images and
-has a flip control, but those images are not present in `extracted_assets/`.
-Consequently their labels, ranges, and metric-conversion markings cannot be
-identified from the allowed references and are deliberately not guessed or
-rendered. The slide's visible `CONVERSION` marking is noted but its unit
-graduations are also not legible enough to reproduce. A back-side page can be
-added when those reference photos are available.
+The N909-ES is a simplex rule, with scales on one face only. The slide's visible
+`CONVERSION` marking is noted, but its unit graduations are not legible enough
+in the supplied photo to reproduce.
