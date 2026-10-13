@@ -55,7 +55,7 @@
       labels: [6, 7, 8, 9, 10, 12, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90]
     },
     {
-      id: 'T', name: 'T', section: 'bottom', formula: '1 + log10(tan(theta))',
+      id: 'T', name: 'T', section: 'slide', formula: '1 + log10(tan(theta))',
       min: 5.7105931375, max: 45,
       from: (theta) => 1 + Math.log10(Math.tan(radians(theta))),
       to: (x) => Math.atan(10 ** (x - 1)) * 180 / Math.PI,

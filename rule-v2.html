@@ -39,6 +39,7 @@
       <div class="toolbar">
         <button type="button" id="example">C 1 over D 2</button>
         <button type="button" id="center">Center slide and cursor</button>
+        <button type="button" id="flip">Flip to back</button>
         <output id="reading" aria-live="polite"></output>
       </div>
       <svg class="rule-svg" id="rule" viewBox="0 0 1000 590" role="img" aria-label="Front-side slide rule with logarithmic and trigonometric scales">
@@ -46,13 +47,17 @@
         <rect class="rail" x="0" y="137" width="1000" height="142" rx="7"/>
         <rect class="rail" x="0" y="297" width="1000" height="262" rx="7"/>
         <text class="section-name" x="16" y="15">FIXED TOP STATOR</text>
-        <text class="section-name" x="16" y="135">SLIDE — DRAG THIS SECTION</text>
+        <text class="section-name" x="16" y="135">SLIDE — DRAG THIS SECTION · CONVERSION MARKINGS NOT REPRODUCED</text>
         <text class="section-name" x="16" y="295">FIXED BOTTOM STATOR</text>
         <g id="fixed-top"></g>
         <g id="slide-layer"></g>
         <g id="fixed-bottom"></g>
         <line id="cursor-line" class="cursor-line" x1="500" y1="10" x2="500" y2="570"/>
         <rect id="cursor-hit" class="cursor-hit" x="490" y="8" width="20" height="564"/>
+        <g id="back-message" visibility="hidden">
+          <text x="500" y="275" text-anchor="middle" class="scale-name">Back-side reference photos are not available.</text>
+          <text x="500" y="305" text-anchor="middle" class="section-name">No back scales or conversion markings are guessed.</text>
+        </g>
       </svg>
       <p class="instructions">The red graduations are CI and the trig scales. π gauge marks are shown on C and D. Back-side metric references are not included because their photos were not supplied.</p>
     </section>
@@ -66,12 +71,17 @@
       const slide = document.getElementById('slide-layer');
       const cursorLine = document.getElementById('cursor-line');
       const cursorHit = document.getElementById('cursor-hit');
+      const backMessage = document.getElementById('back-message');
       const output = document.getElementById('reading');
-      const rows = { top: [64, 99], slide: [191, 226], bottom: [351, 386, 421, 456, 491] };
+      const rows = { top: [64, 99], slide: [174, 210, 246], bottom: [350, 400, 450, 500] };
+      let isBack = false;
       for (const section of ['top', 'slide', 'bottom']) {
         const group = section === 'slide' ? slide : document.getElementById(`fixed-${section}`);
         const scales = PickettScales.definitions.filter((scale) => scale.section === section);
-        group.innerHTML = scales.map((scale, index) => PickettScales.renderScale(scale, rows[section][index], width)).join('');
+        const slideHitArea = section === 'slide'
+          ? '<rect x="-1000" y="137" width="3000" height="142" fill="transparent" pointer-events="all"/>'
+          : '';
+        group.innerHTML = slideHitArea + scales.map((scale, index) => PickettScales.renderScale(scale, rows[section][index], width)).join('');
       }
 
       let offset = 0;
@@ -83,6 +93,10 @@
         cursorLine.setAttribute('x1', cursor);
         cursorLine.setAttribute('x2', cursor);
         cursorHit.setAttribute('x', cursor - 10);
+        if (isBack) {
+          output.textContent = 'Back-side markings are unavailable in the supplied references.';
+          return;
+        }
         const d = PickettScales.readScaleAt('D', cursor / width);
         const c = PickettScales.readScaleAt('C', cursor / width, offset / width);
         const base = PickettScales.readScaleAt('D', offset / width);
@@ -114,6 +128,17 @@
       document.getElementById('example').addEventListener('click', () => {
         offset = (PickettScales.positionOf(scale('D'), 2) - PickettScales.positionOf(scale('C'), 1)) * width;
         cursor = PickettScales.positionOf(scale('D'), 6) * width;
+        update();
+      });
+      document.getElementById('flip').addEventListener('click', (event) => {
+        const back = event.currentTarget.dataset.side !== 'back';
+        isBack = back;
+        event.currentTarget.dataset.side = back ? 'back' : 'front';
+        event.currentTarget.textContent = back ? 'Flip to front' : 'Flip to back';
+        for (const id of ['fixed-top', 'slide-layer', 'fixed-bottom', 'cursor-line', 'cursor-hit']) {
+          document.getElementById(id).setAttribute('visibility', back ? 'hidden' : 'visible');
+        }
+        backMessage.setAttribute('visibility', back ? 'visible' : 'hidden');
         update();
       });
       update();
