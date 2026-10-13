@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>N909-ES — exact SVG rendering</title>
+  <link rel="stylesheet" href="topic.css">
+  <style>
+    .rule-panel, .card { background: rgba(255, 251, 244, .94); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 20px; }
+    .rule-panel { overflow: hidden; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .toolbar button { border: 0; border-radius: 999px; padding: 10px 15px; color: white; background: var(--accent-2); font: inherit; font-weight: 700; cursor: pointer; }
+    .toolbar output { margin-left: auto; font-variant-numeric: tabular-nums; }
+    .rule-svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: none; user-select: none; }
+    .rail { fill: #f4e8c9; stroke: #b2a17c; stroke-width: 1; }
+    .divider { stroke: #b2a17c; stroke-width: 1; }
+    .section-name { fill: #5d6877; font: 700 13px sans-serif; letter-spacing: .08em; }
+    .scale-name { fill: var(--scale-color); font: 700 14px sans-serif; }
+    .baseline, .tick { stroke: var(--scale-color); stroke-width: 1; vector-effect: non-scaling-stroke; }
+    .tick.major { stroke-width: 1.35; }
+    .scale text:not(.scale-name):not(.gauge-label) { fill: var(--scale-color); font: 10px sans-serif; }
+    .gauge, .gauge-label { fill: #bd332b; stroke: #bd332b; font: 700 10px sans-serif; }
+    #slide-layer { cursor: grab; }
+    #slide-layer.dragging { cursor: grabbing; }
+    .cursor-line { stroke: #28777a; stroke-width: 2; vector-effect: non-scaling-stroke; }
+    .cursor-hit { fill: transparent; cursor: ew-resize; }
+    .instructions { color: var(--muted); margin-bottom: 0; }
+    @media (max-width: 640px) { .page { width: calc(100% - 16px); padding-top: 12px; } .rule-panel, .card { padding: 12px; } .toolbar output { width: 100%; margin-left: 0; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">Independent mathematical rendering</span>
+      <h1>Pickett N909-ES</h1>
+      <p class="lede">Scales are drawn from formulas rather than photographs. Drag the slide rows or the cursor; align C 1 with D 2 to try the example.</p>
+    </section>
+    <section class="rule-panel" aria-label="Interactive slide rule">
+      <div class="toolbar">
+        <button type="button" id="example">C 1 over D 2</button>
+        <button type="button" id="center">Center slide and cursor</button>
+        <output id="reading" aria-live="polite"></output>
+      </div>
+      <svg class="rule-svg" id="rule" viewBox="0 0 1000 590" role="img" aria-label="Front-side slide rule with logarithmic and trigonometric scales">
+        <rect class="rail" x="0" y="17" width="1000" height="102" rx="7"/>
+        <rect class="rail" x="0" y="137" width="1000" height="142" rx="7"/>
+        <rect class="rail" x="0" y="297" width="1000" height="262" rx="7"/>
+        <text class="section-name" x="16" y="15">FIXED TOP STATOR</text>
+        <text class="section-name" x="16" y="135">SLIDE — DRAG THIS SECTION</text>
+        <text class="section-name" x="16" y="295">FIXED BOTTOM STATOR</text>
+        <g id="fixed-top"></g>
+        <g id="slide-layer"></g>
+        <g id="fixed-bottom"></g>
+        <line id="cursor-line" class="cursor-line" x1="500" y1="10" x2="500" y2="570"/>
+        <rect id="cursor-hit" class="cursor-hit" x="490" y="8" width="20" height="564"/>
+      </svg>
+      <p class="instructions">The red graduations are CI and the trig scales. π gauge marks are shown on C and D. Back-side metric references are not included because their photos were not supplied.</p>
+    </section>
+    <p class="footer"><a href="compare-v2.html">Compare the generated rule with the supplied reference photos</a> · <a href="scales.md">Scale formulas and tick intervals</a></p>
+  </main>
+  <script src="scales.js"></script>
+  <script>
+    (() => {
+      const svg = document.getElementById('rule');
+      const width = 1000;
+      const slide = document.getElementById('slide-layer');
+      const cursorLine = document.getElementById('cursor-line');
+      const cursorHit = document.getElementById('cursor-hit');
+      const output = document.getElementById('reading');
+      const rows = { top: [64, 99], slide: [191, 226], bottom: [351, 386, 421, 456, 491] };
+      for (const section of ['top', 'slide', 'bottom']) {
+        const group = section === 'slide' ? slide : document.getElementById(`fixed-${section}`);
+        const scales = PickettScales.definitions.filter((scale) => scale.section === section);
+        group.innerHTML = scales.map((scale, index) => PickettScales.renderScale(scale, rows[section][index], width)).join('');
+      }
+
+      let offset = 0;
+      let cursor = width / 2;
+      let drag = null;
+      const scale = (id) => PickettScales.definitions.find((item) => item.id === id);
+      const update = () => {
+        slide.setAttribute('transform', `translate(${offset} 0)`);
+        cursorLine.setAttribute('x1', cursor);
+        cursorLine.setAttribute('x2', cursor);
+        cursorHit.setAttribute('x', cursor - 10);
+        const d = PickettScales.readScaleAt('D', cursor / width);
+        const c = PickettScales.readScaleAt('C', cursor / width, offset / width);
+        const base = PickettScales.readScaleAt('D', offset / width);
+        output.textContent = `D ${d ? d.toFixed(3) : '—'} · C ${c ? c.toFixed(3) : '—'} · ${base && c ? `${base.toFixed(3)} × ${c.toFixed(3)} = ${(base * c).toFixed(3)}` : 'align C 1 with D to multiply'}`;
+      };
+      const pointerX = (event) => {
+        const bounds = svg.getBoundingClientRect();
+        return (event.clientX - bounds.left) * width / bounds.width;
+      };
+      const start = (event, target) => {
+        drag = { target, x: pointerX(event), initial: target === 'slide' ? offset : cursor };
+        if (target === 'slide') slide.classList.add('dragging');
+        svg.setPointerCapture(event.pointerId);
+        event.preventDefault();
+      };
+      slide.addEventListener('pointerdown', (event) => start(event, 'slide'));
+      cursorHit.addEventListener('pointerdown', (event) => start(event, 'cursor'));
+      svg.addEventListener('pointermove', (event) => {
+        if (!drag) return;
+        const next = drag.initial + pointerX(event) - drag.x;
+        if (drag.target === 'slide') offset = Math.max(-width, Math.min(width, next));
+        else cursor = Math.max(0, Math.min(width, next));
+        update();
+      });
+      const end = () => { drag = null; slide.classList.remove('dragging'); };
+      svg.addEventListener('pointerup', end);
+      svg.addEventListener('pointercancel', end);
+      document.getElementById('center').addEventListener('click', () => { offset = 0; cursor = width / 2; update(); });
+      document.getElementById('example').addEventListener('click', () => {
+        offset = (PickettScales.positionOf(scale('D'), 2) - PickettScales.positionOf(scale('C'), 1)) * width;
+        cursor = PickettScales.positionOf(scale('D'), 6) * width;
+        update();
+      });
+      update();
+    })();
+  </script>
+</body>
+</html>

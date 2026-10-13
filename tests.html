@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scale formula tests</title>
+  <link rel="stylesheet" href="topic.css">
+  <style>
+    #results { white-space: pre-wrap; font: 15px/1.5 ui-monospace, monospace; }
+    .pass { color: #17603b; }
+    .fail { color: #a32424; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero"><span class="eyebrow">Browser tests</span><h1>Scale formula checks</h1><p class="lede">Checks each generated graduation, inverse mapping, and the C/D multiplication example.</p></section>
+    <section class="card"><pre id="results">Running…</pre></section>
+  </main>
+  <script src="scales.js"></script>
+  <script>
+    (() => {
+      const expectedPosition = (scale, value) => {
+        switch (scale.id) {
+          case 'K': return Math.log10(value) / 3;
+          case 'A': return Math.log10(value) / 2;
+          case 'CI': return 1 - Math.log10(value);
+          case 'C':
+          case 'D': return Math.log10(value);
+          case 'L': return value;
+          case 'S': return 1 + Math.log10(Math.sin(value * Math.PI / 180));
+          case 'T': return 1 + Math.log10(Math.tan(value * Math.PI / 180));
+          case 'ST': return 2 + Math.log10(Math.tan(value * Math.PI / 180));
+          default: throw new Error(`Missing independent formula for ${scale.id}`);
+        }
+      };
+      const failures = [];
+      let checks = 0;
+      const check = (condition, message) => {
+        checks += 1;
+        if (!condition) failures.push(message);
+      };
+      for (const scale of PickettScales.definitions) {
+        const ticks = PickettScales.tickValues(scale);
+        check(ticks.length > 0, `${scale.id} has no ticks`);
+        const renderedTicks = [...PickettScales.renderScale(scale, 20, 10000).matchAll(/<line x1="([^"]+)" y1="20" x2="[^"]+" y2="[^"]+" class="tick(?: major)?"/g)];
+        check(renderedTicks.length === ticks.length, `${scale.id} rendered tick count differs from the definition`);
+        ticks.forEach((tick, index) => {
+          const actual = PickettScales.positionOf(scale, tick);
+          const expected = expectedPosition(scale, tick);
+          check(Math.abs(actual - expected) <= 0.0001, `${scale.id} tick ${tick}: position error exceeds 0.01%`);
+          check(Math.abs(Number(renderedTicks[index][1]) / 10000 - expected) <= 0.0001, `${scale.id} rendered tick ${tick}: position error exceeds 0.01%`);
+          check(Math.abs(PickettScales.valueAtPosition(scale, actual) - tick) <= 1e-8, `${scale.id} tick ${tick}: inverse mapping failed`);
+        });
+      }
+      const c = PickettScales.definitions.find((scale) => scale.id === 'C');
+      const d = PickettScales.definitions.find((scale) => scale.id === 'D');
+      const slideOffset = PickettScales.positionOf(d, 2) - PickettScales.positionOf(c, 1);
+      const cursor = PickettScales.positionOf(d, 6);
+      const cAtCursor = PickettScales.readScaleAt('C', cursor, slideOffset);
+      const dAtCursor = PickettScales.readScaleAt('D', cursor);
+      check(Math.abs(cAtCursor - 3) < 1e-10, 'C 3 is not under the example cursor');
+      check(Math.abs(dAtCursor - 6) < 1e-10, 'D does not read 6 under the example cursor');
+      const result = document.getElementById('results');
+      result.className = failures.length ? 'fail' : 'pass';
+      result.textContent = failures.length ? `${checks} checks; ${failures.length} failed\n${failures.join('\n')}` : `${checks} checks passed across ${PickettScales.definitions.length} scales.`;
+      document.documentElement.dataset.testStatus = failures.length ? 'failed' : 'passed';
+    })();
+  </script>
+</body>
+</html>

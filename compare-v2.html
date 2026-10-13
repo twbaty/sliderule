@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compare the N909-ES rendering</title>
+  <link rel="stylesheet" href="topic.css">
+  <style>
+    .comparison { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr); gap: 18px; align-items: start; }
+    .card { background: rgba(255, 251, 244, .94); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 16px; min-width: 0; }
+    iframe { width: 100%; height: 650px; border: 0; border-radius: 12px; background: #f4e8c9; }
+    .reference img { display: block; width: 100%; height: auto; margin: 10px 0 18px; }
+    .reference figure { margin: 0; }
+    .reference figcaption, .credit { color: var(--muted); font-size: .88rem; }
+    @media (max-width: 760px) { .comparison { grid-template-columns: 1fr; } iframe { height: 520px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">Reference comparison</span>
+      <h1>Generated scales beside the reference</h1>
+      <p class="lede">The left panel is the new formula-driven SVG. The right panel shows the supplied front-side reference photographs for visual checking.</p>
+    </section>
+    <section class="comparison">
+      <div class="card"><h2>SVG rendering</h2><iframe title="Interactive generated N909-ES rule" src="rule-v2.html"></iframe></div>
+      <div class="card reference">
+        <h2>Supplied reference photos</h2>
+        <figure><img src="extracted_assets/n909-es-stator-front-top.jpg" alt="Reference photo of the fixed top stator"><figcaption>Fixed top stator</figcaption></figure>
+        <figure><img src="extracted_assets/n909-es-slider-front.jpg" alt="Reference photo of the slide"><figcaption>Slide</figcaption></figure>
+        <figure><img src="extracted_assets/n909-es-stator-front-bottom.jpg" alt="Reference photo of the fixed bottom stator"><figcaption>Fixed bottom stator</figcaption></figure>
+        <p class="credit">Reference artwork and photography © 2005 Derek Ross. Used here only for comparison; the SVG rendering is drawn from scale formulas.</p>
+      </div>
+    </section>
+    <p class="footer"><a href="rule-v2.html">Return to the SVG rule</a></p>
+  </main>
+</body>
+</html>
