@@ -23,7 +23,11 @@
     ]
   };
   document.querySelectorAll('.nav a, .next a, .hub-link').forEach(a => {
-    if (!a.getAttribute('href').startsWith('index')) a.search = '?teach=1';
+    const url = new URL(a.href);
+    if (!url.pathname.endsWith('/index.html')) {
+      url.searchParams.set('teach', '1');
+      a.href = url.href;
+    }
   });
   if (topic === 'ab') {
     const cards = document.querySelectorAll('.grid .card');
