@@ -44,15 +44,18 @@
     cursorPx = clamp(cursorPx, cb.min, cb.max);
     slideWrap.style.transform = `translateX(${slideOffsetPx}px)`;
     cursor.style.left = `${cursorPx}px`;
+    rule.dispatchEvent(new CustomEvent("rule-render", { detail: { slide: slideOffsetPx / stageWidth(), cursor: cursorPx / stageWidth() } }));
   }
 
   function resetPositions() {
+    rule.dispatchEvent(new Event("rule-interrupt"));
     slideOffsetPx = 0;
     cursorPx = stageWidth() / 2;
     render();
   }
 
   function beginDrag(target, pointerId, clientX, captureEl) {
+    rule.dispatchEvent(new Event("rule-interrupt"));
     dragging = true;
     dragTarget = target;
     dragStartX = clientX;
@@ -94,9 +97,23 @@
 
   window.addEventListener('pointerup', endDrag);
   window.addEventListener('pointercancel', endDrag);
-  window.addEventListener('resize', render);
+  if (new URLSearchParams(location.search).get('teach') !== '1') window.addEventListener('resize', render);
 
   if (centerBtn) centerBtn.addEventListener('click', resetPositions);
 
+  if (new URLSearchParams(location.search).get('teach') === '1') {
+    rule.teaching = {
+      get: () => ({ slide: slideOffsetPx / stageWidth(), cursor: cursorPx / stageWidth() }),
+      set: (slide, hairline) => { slideOffsetPx = slide * stageWidth(); cursorPx = hairline * stageWidth(); render(); }
+    };
+    let previousWidth = stageWidth();
+    window.addEventListener('resize', () => {
+      const width = stageWidth();
+      slideOffsetPx *= width / previousWidth;
+      cursorPx *= width / previousWidth;
+      previousWidth = width;
+      render();
+    });
+  }
   resetPositions();
 })();
