@@ -226,3 +226,24 @@
   body:has(.teaching-controls) .panel { padding: 12px; }
   body:has(.teaching-controls) .rule { padding: 8px 0; }
 }
+
+/* Window preview styles apply only with ?window=1. */
+.window-rule { padding: 8px 0; }
+.rule-viewport { position: relative; overflow: hidden; touch-action: none; }
+.window-rule .rule-stage { max-width: none; margin-top: 0; margin-bottom: 0; }
+.window-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.window-tools output { min-width: 4ch; text-align: center; }
+.window-tools button:disabled { opacity: .45; cursor: default; }
+.rule-overview { position: relative; height: 38px; margin-top: 12px; background: #e4d2aa; overflow: hidden; border-radius: 5px; cursor: crosshair; touch-action: none; }
+.overview-art { position: absolute; width: 100%; height: 100%; pointer-events: none; }
+.overview-art .rule-piece { max-height: 100%; }
+.overview-art img:last-child, .lens-art img:last-child { position: absolute; top: 0; width: 10.1%; transform: translateX(-50%); z-index: 4; }
+.overview-box { position: absolute; top: 0; bottom: 0; border: 2px solid #256b74; background: #256b7420; pointer-events: none; }
+.rule-lens { position: absolute; top: 20px; width: 160px; height: 160px; border: 3px solid #256b74; border-radius: 50%; overflow: hidden; transform: translateX(-50%); z-index: 10; pointer-events: none; background: #f1e5cc; box-shadow: 0 4px 15px #0005; }
+.rule-lens[hidden] { display: none; }
+.lens-art { position: absolute; }
+.rule-viewport:focus-visible, .rule-overview:focus-visible { outline: 3px solid #dca85f; outline-offset: 3px; }
+@media(max-width:760px) { body:has(.window-rule) .panel { padding: 12px; } }
+.window-rule .rule-slider-wrap { height: 28.62%; cursor: grab; }
+.overview-art { transform-origin: top left; }
+.overview-art .rule-piece { max-height: none; }

@@ -23,7 +23,7 @@
     ]
   };
   document.querySelectorAll('.nav a, .next a, .hub-link').forEach(a => {
-    if (!a.getAttribute('href').startsWith('index')) a.search = '?teach=1';
+    if (!a.getAttribute('href').startsWith('index')) a.search = new URLSearchParams(location.search).get('window') === '1' ? '?teach=1&window=1' : '?teach=1';
   });
   if (topic === 'ab') {
     const cards = document.querySelectorAll('.grid .card');
