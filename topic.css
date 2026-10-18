@@ -332,3 +332,16 @@ h1 {
     padding-right: 18px;
   }
 }
+
+/* Opt-in picture preview. The default pages retain their current layout. */
+.phone-lessons { margin-bottom: 24px; }
+.phone-lessons > .button { margin-bottom: 24px; }
+.phone-lessons .example-steps { grid-template-columns: 1fr 1fr; }
+.phone-lessons .example-steps figure { padding: 8px; }
+@media (max-width: 760px) {
+  .picture-preview .rule-section,
+  .picture-preview .content-col > .examples:not(.phone-lessons) { display: none; }
+  .phone-lessons { padding: 16px 10px; }
+  .phone-lessons .example-steps { grid-template-columns: 1fr; gap: 12px; }
+  .phone-lessons .example-steps figcaption { font-size: .92rem; line-height: 1.4; }
+}
