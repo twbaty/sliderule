@@ -212,3 +212,17 @@
     animation-duration: 0.01ms !important;
   }
 }
+
+.teaching-controls { margin-top: 12px; }
+.teaching-controls label { display: inline-flex; align-items: center; gap: 8px; padding: 10px 0; margin-right: 18px; }
+.teaching-controls input { width: 20px; height: 20px; }
+.teaching-controls p { margin: 8px 0; }
+#scaleReadout { font-variant-numeric: tabular-nums; line-height: 1.8; }
+.teaching-examples { margin-bottom: 20px; }
+.teaching-examples button { border: 0; font: inherit; cursor: pointer; }
+.teaching-controls button:disabled { opacity: .5; cursor: default; }
+.teaching-examples button:focus-visible, .teaching-controls :focus-visible { outline: 3px solid #dca85f; outline-offset: 3px; }
+@media (max-width: 760px) {
+  body:has(.teaching-controls) .panel { padding: 12px; }
+  body:has(.teaching-controls) .rule { padding: 8px 0; }
+}
