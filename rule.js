@@ -138,23 +138,25 @@
 
   window.addEventListener('pointerup', endDrag);
   window.addEventListener('pointercancel', endDrag);
-  if (new URLSearchParams(location.search).get('teach') !== '1') window.addEventListener('resize', render);
+  if (!['teach', 'window'].some(key => new URLSearchParams(location.search).get(key) === '1')) window.addEventListener('resize', render);
 
   if (centerBtn) centerBtn.addEventListener('click', resetPositions);
 
-  if (new URLSearchParams(location.search).get('teach') === '1') {
+  if (['teach', 'window'].some(key => new URLSearchParams(location.search).get(key) === '1')) {
     rule.teaching = {
       get: () => ({ slide: slideOffsetPx / stageWidth(), cursor: cursorPx / stageWidth() }),
       set: (slide, hairline) => { slideOffsetPx = slide * stageWidth(); cursorPx = hairline * stageWidth(); render(); }
     };
     let previousWidth = stageWidth();
-    window.addEventListener('resize', () => {
+    const resize = () => {
       const width = stageWidth();
       slideOffsetPx *= width / previousWidth;
       cursorPx *= width / previousWidth;
       previousWidth = width;
       render();
-    });
+    };
+    window.addEventListener('resize', resize);
+    rule.addEventListener('window-resize', resize);
   }
   resetPositions();
 })();

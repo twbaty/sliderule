@@ -26,6 +26,7 @@
     const url = new URL(a.href);
     if (!url.pathname.endsWith('/index.html')) {
       url.searchParams.set('teach', '1');
+      if (new URLSearchParams(location.search).get('window') === '1') url.searchParams.set('window', '1');
       a.href = url.href;
     }
   });
