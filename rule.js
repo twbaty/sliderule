@@ -7,6 +7,47 @@
 
   if (!rule || !ruleStage || !slideWrap || !cursor) return;
 
+  // Review switch: leave the public layout alone until the preview is approved.
+  if (new URLSearchParams(location.search).get('slim') === '1') {
+    const section = rule.closest('.rule-section');
+    const panel = section.querySelector('.panel');
+    const pin = document.createElement('button');
+    pin.type = 'button';
+    pin.className = 'action rule-pin';
+    pin.textContent = 'Pin rule';
+    pin.setAttribute('aria-label', 'Pin rule while reading');
+    let pinned = true;
+    try {
+      pinned = localStorage.getItem('rule-pinned') !== 'false';
+    } catch (error) { /* Storage may be unavailable; keep the default. */ }
+
+    function updatePanel() {
+      section.classList.toggle('rule-unpinned', !pinned);
+      section.classList.toggle('rule-compact', pinned && window.scrollY > 64);
+      pin.setAttribute('aria-pressed', String(pinned));
+      pin.title = pinned ? 'Unpin rule' : 'Pin rule while reading';
+    }
+    pin.addEventListener('click', () => {
+      pinned = !pinned;
+      try {
+        localStorage.setItem('rule-pinned', String(pinned));
+      } catch (error) { /* The toggle still works without storage. */ }
+      updatePanel();
+    });
+    panel.prepend(pin);
+    section.classList.add('rule-slim-preview');
+    window.addEventListener('scroll', updatePanel, { passive: true });
+    updatePanel();
+
+    // Keep both independent review switches when moving between lessons.
+    document.querySelectorAll('a[href]').forEach(link => {
+      const url = new URL(link.href, location.href);
+      if (url.origin !== location.origin || !url.pathname.endsWith('.html')) return;
+      url.searchParams.set('slim', '1');
+      link.href = url.href;
+    });
+  }
+
   let slideOffsetPx = 0;
   let cursorPx = 0;
   let dragging = false;

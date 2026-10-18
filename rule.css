@@ -226,3 +226,42 @@
   body:has(.teaching-controls) .panel { padding: 12px; }
   body:has(.teaching-controls) .rule { padding: 8px 0; }
 }
+
+/* Opt-in review: ?slim=1. Keep rule geometry and horizontal padding intact. */
+.rule-section.rule-slim-preview {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.rule-slim-preview .panel { position: relative; }
+.rule-slim-preview .panel-head { padding-right: 100px; }
+.rule-slim-preview .rule-pin {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  padding: 6px 10px;
+  font-size: .85rem;
+  min-height: 32px;
+}
+.rule-pin[aria-pressed="true"] { background: #256b74; }
+.rule-pin:focus-visible { outline: 3px solid #dca85f; outline-offset: 2px; }
+.rule-section.rule-unpinned { position: static; }
+.rule-section.rule-compact {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  animation: none;
+  background: rgba(239, 228, 207, .96);
+}
+.rule-slim-preview.rule-compact .panel {
+  padding-top: 38px;
+  padding-bottom: 6px;
+  border-radius: 16px;
+}
+.rule-compact .panel-head,
+.rule-compact .teaching-controls,
+.rule-compact .rule-hint { display: none; }
+.rule-compact .rule-pin { top: 3px; }
+@media (max-width: 760px) {
+  .rule-slim-preview .rule-pin { right: 12px; }
+  .rule-slim-preview .panel-head { padding-right: 0; padding-top: 38px; }
+}
